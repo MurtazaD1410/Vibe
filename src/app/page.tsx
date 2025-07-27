@@ -1,7 +1,7 @@
 import React from "react";
 
-const Page = () => {
-  return <div className="font-bold text-rose-500">Hello World!!</div>;
+const Page = async () => {
+  return <div className="font-bold text-rose-500"></div>;
 };
 
 export default Page;
