@@ -1,7 +1,20 @@
-import React from "react";
+import { getQueryClient, trpc } from "@/trpc/server";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
+import React, { Suspense } from "react";
+import Client from "./client";
 
 const Page = async () => {
-  return <div className="font-bold text-rose-500"></div>;
+  console.log("server component");
+  const queryClient = getQueryClient();
+  void queryClient.prefetchQuery(trpc.createAi.queryOptions({ text: "John" }));
+
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <Suspense fallback={<p>Loading...</p>}>
+        <Client />
+      </Suspense>
+    </HydrationBoundary>
+  );
 };
 
 export default Page;
