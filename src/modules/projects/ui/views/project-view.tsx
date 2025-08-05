@@ -7,7 +7,7 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 
-import MessagesContainer from "../components/messages-component";
+import MessagesContainer from "../components/messages-container";
 import { Fragment } from "@/generated/prisma";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ProjectHeader from "../components/project-header";
@@ -44,7 +44,7 @@ const ProjectView = ({ projectId }: Props) => {
             />
           </Suspense>
         </ResizablePanel>
-        <ResizableHandle withHandle />
+        <ResizableHandle className="hover:bg-primary transition-colors" />
         <ResizablePanel
           defaultSize={65}
           minSize={50}
