@@ -61,4 +61,8 @@ model Fragment {
 }
 
 
-
+model Usage {
+  key String @id
+  points Int
+  expire DateTime?
+}
