@@ -46,7 +46,11 @@ const MessagesContainer = ({
   }, [messages, setActiveFragment]);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    const timer = setTimeout(() => {
+      bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 500);
+
+    return () => clearTimeout(timer);
   }, [messages.length]);
 
   const lastMessage = messages[messages.length - 1];
@@ -71,7 +75,8 @@ const MessagesContainer = ({
             />
           ))}
           {isLastMessageUser && <MessageLoading />}
-          <div className="" ref={bottomRef} />
+          {/* <div className="h-10" /> */}
+          <div ref={bottomRef} />
         </div>
       </div>
       <div className="relative p-3 pt-1">
