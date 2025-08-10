@@ -5,6 +5,8 @@ import MessageCard from "./message-card";
 import MessageForm from "./message-form";
 import { Fragment } from "@/generated/prisma";
 import MessageLoading from "./message-loading";
+import { Loader2, RefreshCcw } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface Props {
   projectId: string;
@@ -88,3 +90,20 @@ const MessagesContainer = ({
 };
 
 export default MessagesContainer;
+
+export const MessagesContainerSkeleton = () => {
+  return (
+    <div className="flex flex-col items-center justify-center text-center px-4 h-full">
+      <Loader2 className="w-4 h-4 animate-spin" />
+      <h1 className="text-sm">Loading Messages...</h1>
+
+      <Button
+        variant="ghost"
+        onClick={() => window.location.reload()}
+        size="icon"
+      >
+        <RefreshCcw />
+      </Button>
+    </div>
+  );
+};

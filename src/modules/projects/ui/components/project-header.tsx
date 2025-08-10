@@ -2,7 +2,12 @@ import React from "react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { SunMoonIcon, ChevronDownIcon, ChevronLeftIcon } from "lucide-react";
+import {
+  SunMoonIcon,
+  ChevronDownIcon,
+  ChevronLeftIcon,
+  Loader2,
+} from "lucide-react";
 import { useTRPC } from "@/trpc/client";
 import { Button } from "@/components/ui/button";
 import {
@@ -33,7 +38,7 @@ const ProjectHeader = ({ projectId }: Props) => {
   );
 
   return (
-    <header className="p-2 flex justify-between items-center border-b">
+    <header className="p-2 flex justify-between items-center border-b h-14">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
@@ -88,3 +93,14 @@ const ProjectHeader = ({ projectId }: Props) => {
 };
 
 export default ProjectHeader;
+
+export const ProjectHeaderSkeleton = () => {
+  return (
+    <div className="flex items-center justify-between text-center px-4 h-14 border-b">
+      <div className="flex gap-2 items-center">
+        <Loader2 className="w-4 h-4 animate-spin" />
+        <h1 className="text-sm">Loading...</h1>
+      </div>
+    </div>
+  );
+};
