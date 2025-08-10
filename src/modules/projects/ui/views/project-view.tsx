@@ -7,10 +7,14 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 
-import MessagesContainer from "../components/messages-container";
+import MessagesContainer, {
+  MessagesContainerSkeleton,
+} from "../components/messages-container";
 import { Fragment } from "@/generated/prisma";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import ProjectHeader from "../components/project-header";
+import ProjectHeader, {
+  ProjectHeaderSkeleton,
+} from "../components/project-header";
 import FragmentWeb from "../components/fragment-web";
 import { CodeIcon, CrownIcon, EyeIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -18,6 +22,9 @@ import Link from "next/link";
 import FileExplorer from "@/components/file-explorer";
 import UserControl from "@/components/user-control";
 import { useAuth } from "@clerk/nextjs";
+import { ErrorBoundary } from "react-error-boundary";
+import ProjectHeaderErrorFallback from "@/components/error-fallbacks/project-header-error-fallback";
+import MessagesContainerErrorFallback from "@/components/error-fallbacks/message-container-error-fallback";
 
 interface Props {
   projectId: string;
@@ -37,16 +44,20 @@ const ProjectView = ({ projectId }: Props) => {
           minSize={20}
           className="flex flex-col min-h-0"
         >
-          <Suspense fallback={<div>Loading project...</div>}>
-            <ProjectHeader projectId={projectId} />
-          </Suspense>
-          <Suspense fallback={<div>Loading messages</div>}>
-            <MessagesContainer
-              projectId={projectId}
-              activeFragment={activeFragment}
-              setActiveFragment={setActiveFragment}
-            />
-          </Suspense>
+          <ErrorBoundary fallback={<ProjectHeaderErrorFallback />}>
+            <Suspense fallback={<ProjectHeaderSkeleton />}>
+              <ProjectHeader projectId={projectId} />
+            </Suspense>
+          </ErrorBoundary>
+          <ErrorBoundary fallback={<MessagesContainerErrorFallback />}>
+            <Suspense fallback={<MessagesContainerSkeleton />}>
+              <MessagesContainer
+                projectId={projectId}
+                activeFragment={activeFragment}
+                setActiveFragment={setActiveFragment}
+              />
+            </Suspense>
+          </ErrorBoundary>
         </ResizablePanel>
         <ResizableHandle className="hover:bg-primary transition-colors" />
         <ResizablePanel
